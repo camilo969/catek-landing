@@ -1,0 +1,93 @@
+---
+// Calculator — Savings calculator with animated result
+---
+
+<section id="calculator" class="section">
+    <span class="section-pretitle">CÁLCULO DE IMPACTO</span>
+    <h2>Calculadora de Rentabilidad.</h2>
+    <p class="subtitle">Descubre cuánto dinero está perdiendo tu empresa en tareas repetitivas.</p>
+
+    <div class="calculator-box">
+        <div class="form-group">
+            <label class="form-label">Minutos dedicados a la tarea (por vez)</label>
+            <input type="number" id="calc-minutes" class="form-input" placeholder="Ej: 30" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Veces que se ejecuta al mes</label>
+            <input type="number" id="calc-times" class="form-input" placeholder="Ej: 20" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Coste por hora del empleado (€)</label>
+            <input type="number" id="calc-rate" class="form-input" placeholder="Ej: 25" />
+        </div>
+        <button id="calc-btn" class="cta-button" style="width: 100%; text-align: center; border: none; cursor: pointer;">
+            Calcular Pérdida Anual
+        </button>
+
+        <div id="calc-result" class="calc-result">
+            Estás perdiendo anualmente:
+            <span id="calc-amount" class="result-value">0 €</span>
+            <small>y <span id="calc-hours">0</span> horas de trabajo productivo.</small>
+        </div>
+    </div>
+</section>
+
+<script>
+    function animateValue(
+        obj: HTMLElement,
+        start: number,
+        end: number,
+        duration: number,
+        isCurrency: boolean
+    ) {
+        let startTimestamp: number | null = null;
+        const step = (timestamp: number) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const current = Math.floor(progress * (end - start) + start);
+
+            if (isCurrency) {
+                obj.innerHTML = current.toLocaleString('es-ES', {
+                    style: 'currency',
+                    currency: 'EUR',
+                });
+            } else {
+                obj.innerHTML = current.toLocaleString('es-ES');
+            }
+
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    function calculateSavings() {
+        const minutes =
+            parseFloat(
+                (document.getElementById('calc-minutes') as HTMLInputElement)?.value
+            ) || 0;
+        const times =
+            parseFloat(
+                (document.getElementById('calc-times') as HTMLInputElement)?.value
+            ) || 0;
+        const rate =
+            parseFloat(
+                (document.getElementById('calc-rate') as HTMLInputElement)?.value
+            ) || 0;
+
+        const annualCost = (minutes / 60) * times * rate * 12;
+        const annualHours = (minutes / 60) * times * 12;
+
+        const resultElement = document.getElementById('calc-result');
+        const amountElement = document.getElementById('calc-amount');
+        const hoursElement = document.getElementById('calc-hours');
+
+        if (amountElement) animateValue(amountElement, 0, annualCost, 1000, true);
+        if (hoursElement) animateValue(hoursElement, 0, annualHours, 1000, false);
+
+        resultElement?.classList.add('show');
+    }
+
+    document.getElementById('calc-btn')?.addEventListener('click', calculateSavings);
+</script>

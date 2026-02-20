@@ -1,0 +1,88 @@
+---
+// ContactForm — Contact form with client-side submit handler
+---
+
+<section id="contact" class="section">
+    <span class="section-pretitle">CONTACTO</span>
+    <h2>Hablemos.</h2>
+    <p class="subtitle">¿Tienes un proyecto en mente? Cuéntanos los detalles.</p>
+
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <form id="contactForm" class="contact-grid">
+            <div class="form-group">
+                <label class="form-label" for="name">Nombre</label>
+                <input type="text" id="name" class="form-input" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="email">Email Corporativo</label>
+                <input type="email" id="email" class="form-input" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="company">Empresa</label>
+                <input type="text" id="company" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="phone">Teléfono</label>
+                <input type="tel" id="phone" class="form-input" />
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label" for="role">¿Cuál es tu rol?</label>
+                <select id="role" class="form-select">
+                    <option value="">Selecciona una opción...</option>
+                    <option value="owner">Dueño / Fundador</option>
+                    <option value="manager">Gerente / Director</option>
+                    <option value="employee">Empleado</option>
+                    <option value="other">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label" for="challenges">¿Qué desafíos de procesos tienes actualmente?</label>
+                <textarea
+                    id="challenges"
+                    class="form-textarea"
+                    rows="3"
+                    placeholder="Ej: Perdemos mucho tiempo pasando datos de facturas a Excel..."
+                ></textarea>
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label" for="budget">Presupuesto estimado (Opcional)</label>
+                <select id="budget" class="form-select">
+                    <option value="">Selecciona un rango...</option>
+                    <option value="low">Menos de 1.000€</option>
+                    <option value="medium">1.000€ - 5.000€</option>
+                    <option value="high">Más de 5.000€</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width" style="margin-top: 20px;">
+                <button type="submit" class="cta-button" style="width: 100%; border: none; cursor: pointer;">
+                    Enviar Solicitud
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    const form = document.getElementById('contactForm');
+    form?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const btn = (event.target as HTMLFormElement)?.querySelector(
+            'button[type="submit"]'
+        ) as HTMLButtonElement | null;
+        if (!btn) return;
+
+        const originalText = btn.innerText;
+        btn.innerText = '¡Enviado con éxito!';
+        btn.style.backgroundColor = '#4caf50';
+
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.backgroundColor = '';
+            (event.target as HTMLFormElement)?.reset();
+        }, 3000);
+    });
+</script>

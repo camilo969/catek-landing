@@ -1,0 +1,112 @@
+---
+// Navbar — Fixed navigation with scroll effect
+---
+
+<nav id="navbar">
+    <ul>
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#calculator">Calculadora</a></li>
+        <li><a href="#difference">Por qué Catek</a></li>
+        <li><a href="#contact">Contacto</a></li>
+        <li><a href="#founder">Fundador</a></li>
+    </ul>
+</nav>
+
+<style>
+    nav {
+        position: fixed;
+        top: 20px;
+        left: 0;
+        right: 0;
+        width: min(95%, 650px);
+        margin: 0 auto;
+        background: var(--nav-bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 15px 20px;
+        border-radius: var(--border-radius-lg);
+        display: flex;
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+        z-index: 100;
+        transition: var(--transition-normal);
+    }
+
+    nav:global(.scrolled) {
+        top: 10px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: var(--shadow-md);
+        padding: 12px 15px;
+    }
+
+    nav ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li { margin: 0; }
+
+    nav ul li a {
+        text-decoration: none;
+        color: var(--primary-color);
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: var(--border-radius-sm);
+        transition: var(--transition-normal);
+        position: relative;
+    }
+
+    nav ul li a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 5px;
+        left: 50%;
+        background-color: var(--accent-color);
+        transition: var(--transition-normal);
+        transform: translateX(-50%);
+    }
+
+    nav ul li a:hover::after { width: 40%; }
+
+    nav ul li a:hover {
+        color: var(--accent-color);
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+</style>
+
+<script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            navbar?.classList.add('scrolled');
+        } else {
+            navbar?.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('nav a').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: (targetElement as HTMLElement).offsetTop - 100,
+                        behavior: 'smooth',
+                    });
+                }
+            }
+        });
+    });
+</script>
