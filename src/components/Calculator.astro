@@ -1,59 +1,183 @@
 ---
-// Calculator — Savings calculator with animated result
+// Calculator — Value-Based Pricing Calculator
 ---
 
 <section id="calculator" class="section">
-    <span class="section-pretitle">CÁLCULO DE IMPACTO</span>
+    <span class="section-pretitle">CÁLCULO DE IMPACTO Y PRECIO</span>
     <h2>Calculadora de Rentabilidad.</h2>
-    <p class="subtitle">Descubre cuánto dinero está perdiendo tu empresa en tareas repetitivas.</p>
+    <p class="subtitle">Descubre cuánto estás perdiendo en tareas repetitivas y cuánto te costaría automatizarlo basándonos en el valor real que te aportamos.</p>
 
-    <div class="calculator-box">
-        <div class="form-group">
-            <label class="form-label">Minutos dedicados a la tarea (por vez)</label>
-            <input type="number" id="calc-minutes" class="form-input" placeholder="Ej: 30" />
+    <div class="calculator-box" style="max-width: 900px;">
+        <div id="employees-container">
+            <!-- Employee rows will be added here dynamically -->
         </div>
-        <div class="form-group">
-            <label class="form-label">Veces que se ejecuta al mes</label>
-            <input type="number" id="calc-times" class="form-input" placeholder="Ej: 20" />
+
+        <button id="add-employee-btn" class="cta-button secondary-btn" style="margin-bottom: 25px; font-size: 0.95rem; padding: 12px 25px;">
+            + Añadir persona involucrada
+        </button>
+
+        <div class="form-group" style="padding-top: 25px; border-top: 1px solid rgba(74, 107, 107, 0.2);">
+            <label class="form-label">Ejecuciones al año (total para este proceso)</label>
+            <input type="number" id="calc-executions" class="form-input" placeholder="Ej: 50" value="50" />
         </div>
-        <div class="form-group">
-            <label class="form-label">Coste por hora del empleado (€)</label>
-            <input type="number" id="calc-rate" class="form-input" placeholder="Ej: 25" />
-        </div>
-        <button id="calc-btn" class="cta-button" style="width: 100%; text-align: center; border: none; cursor: pointer;">
-            Calcular Pérdida Anual
+
+        <button id="calc-btn" class="cta-button" style="width: 100%; text-align: center; border: none; cursor: pointer; margin-top: 15px; font-size: 1.1rem; padding: 18px;">
+            Obtener Estimación
         </button>
 
         <div id="calc-result" class="calc-result">
-            Estás perdiendo anualmente:
-            <span id="calc-amount" class="result-value">0 €</span>
-            <small>y <span id="calc-hours">0</span> horas de trabajo productivo.</small>
+            <div class="result-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 25px;">
+                <div class="result-card" style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: var(--border-radius-sm);">
+                    <span style="font-size: 0.95rem; opacity: 0.9; display: block; margin-bottom: 5px;">Implementación (Pago único)</span>
+                    <span id="res-implementation" class="result-value" style="margin: 0; font-size: 1.8rem; color: #fff;">0 € - 0 €</span>
+                </div>
+                <div class="result-card" style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: var(--border-radius-sm);">
+                    <span style="font-size: 0.95rem; opacity: 0.9; display: block; margin-bottom: 5px;">Mantenimiento (Mensual)</span>
+                    <span id="res-maintenance" class="result-value" style="margin: 0; font-size: 1.8rem; color: #fff;">0 € - 0 €</span>
+                    <small style="font-size: 0.75rem; opacity: 0.8; display: block; margin-top: 8px;">* No incluye costes de infraestructura (tokens IA, servidores, API's)</small>
+                </div>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.25); padding: 25px; border-radius: var(--border-radius-sm); border: 1px solid rgba(255,255,255,0.3); text-align: left;">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <h3 style="margin: 0 0 5px 0; font-size: 1.5rem;">ROI Año 1: <span id="res-roi-1" style="color: #fff;">0%</span></h3>
+                        <p id="res-roi-text-1" style="margin: 0; font-size: 1.05rem; font-weight: 500;">Calculando...</p>
+                    </div>
+                    <div style="padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <h3 style="margin: 0 0 5px 0; font-size: 1.5rem; color: #a8d5ba;">ROI Año 2+: <span id="res-roi-2" style="color: #fff;">0%</span></h3>
+                        <p id="res-roi-text-2" style="margin: 0; font-size: 1.05rem; font-weight: 500;">Calculando...</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); text-align: center;">
+                    <div style="display: inline-block; background: rgba(255, 85, 85, 0.15); border: 1px solid rgba(255, 85, 85, 0.4); padding: 12px 25px; border-radius: 12px;">
+                        <span style="font-size: 1.05rem; color: #ffeaea; font-weight: 500;">
+                            ⚠️ Estás perdiendo aprox. <strong id="res-annual-cost" style="font-size: 1.4rem; color: #ff6b6b; margin: 0 4px;">0 €</strong> cada año
+                        </span>
+                        <div style="margin-top: 4px;">
+                            <small style="font-size: 0.85rem; color: rgba(255,255,255,0.8);">al no tener automatizado este proceso.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disclaimers -->
+            <div style="margin-top: 25px; text-align: left; background: rgba(0,0,0,0.15); padding: 20px; border-radius: var(--border-radius-sm);">
+                <p style="font-size: 0.85rem; margin: 0 0 15px 0; opacity: 0.85; line-height: 1.4;">
+                    <strong>Nota informativa sobre esta simulación:</strong><br/>
+                    Los resultados mostrados son una estimación orientativa basada en promedios de eficiencia del sector y los datos proporcionados. 
+                    Este cálculo no constituye una oferta comercial vinculante ni un presupuesto final. La viabilidad técnica, 
+                    costes finales y gastos de infraestructura están sujetos a una auditoría técnica previa.
+                </p>
+                <div style="background: rgba(255,255,255,0.9); color: var(--primary-color); padding: 15px; border-radius: var(--border-radius-sm); border-left: 4px solid var(--accent-color);">
+                    <p style="margin: 0; font-size: 0.9rem; font-weight: 500;">
+                        💡 <em>Esta estimación tiene un margen de error del 15%. Para obtener un desglose técnico exacto de tu proceso, solicita una sesión de diagnóstico gratuita.</em>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
+<template id="employee-row-template">
+    <div class="employee-row" style="display: flex; gap: 20px; align-items: flex-end; margin-bottom: 20px; background: rgba(74, 107, 107, 0.05); padding: 20px; border-radius: var(--border-radius-sm); border: 1px solid rgba(74, 107, 107, 0.1); position: relative; transition: var(--transition-normal);">
+        <div class="form-group" style="margin-bottom: 0; flex: 1;">
+            <label class="form-label" style="font-size: 0.9rem;">Salario Bruto Anual (€)</label>
+            <input type="number" class="form-input emp-salary" placeholder="Ej: 25000" value="25000" required />
+        </div>
+        <div class="form-group" style="margin-bottom: 0; flex: 1;">
+            <label class="form-label" style="font-size: 0.9rem;">Minutos por tarea</label>
+            <input type="number" class="form-input emp-minutes" placeholder="Ej: 45" value="45" required />
+        </div>
+        <button type="button" class="remove-employee-btn" title="Eliminar persona" style="background: transparent; border: none; color: #cc5555; cursor: pointer; font-size: 1.8rem; padding: 0 10px; height: 48px; line-height: 48px; transition: var(--transition-normal);">&times;</button>
+    </div>
+</template>
+
+<style>
+    .secondary-btn {
+        background-color: transparent !important;
+        color: var(--primary-color) !important;
+        border: 2px solid var(--primary-color) !important;
+        box-shadow: none !important;
+    }
+    .secondary-btn::before {
+        display: none !important;
+    }
+    .secondary-btn:hover {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm) !important;
+    }
+    .employee-row:hover {
+        background: rgba(74, 107, 107, 0.08) !important;
+    }
+    .remove-employee-btn:hover {
+        transform: scale(1.1);
+        color: #ff3333 !important;
+    }
+    @media (max-width: 768px) {
+        .employee-row {
+            flex-direction: column;
+            align-items: stretch !important;
+            padding-top: 35px !important;
+        }
+        .remove-employee-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            height: auto !important;
+            line-height: 1 !important;
+            padding: 5px 10px !important;
+        }
+        .result-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+
 <script>
+    // Constants
+    const MULTIPLIER_SS = 1.3215;
+    const ANNUAL_HOURS = 1580;
+    const OP_COST = 1.2;
+
+    const formatCurrencyRound = (amount: number) => {
+        // Round to nearest 100 for big numbers, or nearest 10 for small
+        let rounded = amount;
+        if (amount > 1000) {
+            rounded = Math.round(amount / 100) * 100;
+        } else if (amount > 100) {
+            rounded = Math.round(amount / 10) * 10;
+        } else {
+            rounded = Math.round(amount);
+        }
+        return rounded.toLocaleString('es-ES') + ' €';
+    };
+
+    const formatRange = (amount: number) => {
+        const min = amount * 0.9;
+        const max = amount * 1.1;
+        return `${formatCurrencyRound(min)} - ${formatCurrencyRound(max)}`;
+    };
+
     function animateValue(
         obj: HTMLElement,
         start: number,
         end: number,
         duration: number,
-        isCurrency: boolean
+        formatter: (val: number) => string
     ) {
         let startTimestamp: number | null = null;
         const step = (timestamp: number) => {
             if (!startTimestamp) startTimestamp = timestamp;
             const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            const current = Math.floor(progress * (end - start) + start);
+            // Easing function: easeOutQuart
+            const easeProgress = 1 - Math.pow(1 - progress, 4);
+            const current = progress === 1 ? end : start + (end - start) * easeProgress;
 
-            if (isCurrency) {
-                obj.innerHTML = current.toLocaleString('es-ES', {
-                    style: 'currency',
-                    currency: 'EUR',
-                });
-            } else {
-                obj.innerHTML = current.toLocaleString('es-ES');
-            }
+            obj.innerHTML = formatter(current);
 
             if (progress < 1) {
                 window.requestAnimationFrame(step);
@@ -62,32 +186,158 @@
         window.requestAnimationFrame(step);
     }
 
-    function calculateSavings() {
-        const minutes =
-            parseFloat(
-                (document.getElementById('calc-minutes') as HTMLInputElement)?.value
-            ) || 0;
-        const times =
-            parseFloat(
-                (document.getElementById('calc-times') as HTMLInputElement)?.value
-            ) || 0;
-        const rate =
-            parseFloat(
-                (document.getElementById('calc-rate') as HTMLInputElement)?.value
-            ) || 0;
+    class SavingsCalculator {
+        container: HTMLElement;
+        addBtn: HTMLButtonElement;
+        calcBtn: HTMLButtonElement;
+        executionsInput: HTMLInputElement;
+        template: HTMLTemplateElement;
 
-        const annualCost = (minutes / 60) * times * rate * 12;
-        const annualHours = (minutes / 60) * times * 12;
+        constructor() {
+            this.container = document.getElementById('employees-container') as HTMLElement;
+            this.addBtn = document.getElementById('add-employee-btn') as HTMLButtonElement;
+            this.calcBtn = document.getElementById('calc-btn') as HTMLButtonElement;
+            this.executionsInput = document.getElementById('calc-executions') as HTMLInputElement;
+            this.template = document.getElementById('employee-row-template') as HTMLTemplateElement;
 
-        const resultElement = document.getElementById('calc-result');
-        const amountElement = document.getElementById('calc-amount');
-        const hoursElement = document.getElementById('calc-hours');
+            if (!this.container || !this.addBtn || !this.calcBtn || !this.template) return;
 
-        if (amountElement) animateValue(amountElement, 0, annualCost, 1000, true);
-        if (hoursElement) animateValue(hoursElement, 0, annualHours, 1000, false);
+            this.init();
+        }
 
-        resultElement?.classList.add('show');
+        init() {
+            // Add initial row
+            this.addRow();
+
+            // Event Listeners
+            this.addBtn.addEventListener('click', () => this.addRow());
+            this.calcBtn.addEventListener('click', () => this.calculate());
+            
+            this.container.addEventListener('click', (e) => {
+                const target = e.target as HTMLElement;
+                if (target.classList.contains('remove-employee-btn')) {
+                    const row = target.closest('.employee-row');
+                    if (row && this.container.children.length > 1) {
+                        row.remove();
+                    } else if (row && this.container.children.length === 1) {
+                        alert('Debe haber al menos una persona involucrada.');
+                    }
+                }
+            });
+        }
+
+        addRow() {
+            const clone = this.template.content.cloneNode(true) as DocumentFragment;
+            this.container.appendChild(clone);
+        }
+
+        calculate() {
+            const executions = parseFloat(this.executionsInput.value) || 0;
+            const rows = this.container.querySelectorAll('.employee-row');
+            
+            let totalAnnualCost = 0;
+
+            rows.forEach(row => {
+                const salaryInput = row.querySelector('.emp-salary') as HTMLInputElement;
+                const minutesInput = row.querySelector('.emp-minutes') as HTMLInputElement;
+                
+                const salary = parseFloat(salaryInput.value) || 0;
+                const minutes = parseFloat(minutesInput.value) || 0;
+
+                // Intermediate rounding to 2 decimals
+                let hourlyCost = (salary * MULTIPLIER_SS) / ANNUAL_HOURS;
+                hourlyCost = Math.round(hourlyCost * 100) / 100;
+
+                let executionCost = (minutes / 60) * hourlyCost * OP_COST;
+                executionCost = Math.round(executionCost * 100) / 100;
+
+                let annualCost = executionCost * executions;
+                annualCost = Math.round(annualCost * 100) / 100;
+
+                totalAnnualCost += annualCost;
+            });
+
+            // Round total annual cost
+            totalAnnualCost = Math.round(totalAnnualCost * 100) / 100;
+
+            // Tramos
+            let percImpl = 0;
+            let percMant = 0;
+
+            if (totalAnnualCost <= 5000) {
+                percImpl = 0.38;
+                percMant = 0.28;
+            } else if (totalAnnualCost <= 15000) {
+                percImpl = 0.30;
+                percMant = 0.24;
+            } else {
+                percImpl = 0.30;
+                percMant = 0.23;
+            }
+
+            let impCost = totalAnnualCost * percImpl;
+            impCost = Math.round(impCost * 100) / 100;
+
+            let mantAnnual = totalAnnualCost * percMant;
+            mantAnnual = Math.round(mantAnnual * 100) / 100;
+
+            let mantMonthly = mantAnnual / 12;
+            mantMonthly = Math.round(mantMonthly * 100) / 100;
+
+            let clientCostYear1 = impCost + mantAnnual;
+            clientCostYear1 = Math.round(clientCostYear1 * 100) / 100;
+
+            let clientBenefitYear1 = totalAnnualCost - clientCostYear1;
+            clientBenefitYear1 = Math.round(clientBenefitYear1 * 100) / 100;
+
+            let roiYear1 = clientCostYear1 > 0 ? (clientBenefitYear1 / clientCostYear1) * 100 : 0;
+            roiYear1 = Math.round(roiYear1 * 10) / 10; 
+
+            // ROI Year 2+ calculation (Implementation cost is 0, only maintenance vs full annual cost)
+            let clientBenefitYear2 = totalAnnualCost - mantAnnual;
+            clientBenefitYear2 = Math.round(clientBenefitYear2 * 100) / 100;
+
+            let roiYear2 = mantAnnual > 0 ? (clientBenefitYear2 / mantAnnual) * 100 : 0;
+            roiYear2 = Math.round(roiYear2 * 10) / 10;
+
+            this.showResults(impCost, mantMonthly, roiYear1, roiYear2, totalAnnualCost);
+        }
+
+        showResults(imp: number, mant: number, roi1: number, roi2: number, totalCost: number) {
+            const resultElement = document.getElementById('calc-result');
+            const elImp = document.getElementById('res-implementation');
+            const elMant = document.getElementById('res-maintenance');
+            const elRoi1 = document.getElementById('res-roi-1');
+            const elRoiText1 = document.getElementById('res-roi-text-1');
+            const elRoi2 = document.getElementById('res-roi-2');
+            const elRoiText2 = document.getElementById('res-roi-text-2');
+            const elTotal = document.getElementById('res-annual-cost');
+
+            if (!resultElement || !elImp || !elMant || !elRoi1 || !elRoi2 || !elTotal || !elRoiText1 || !elRoiText2) return;
+
+            resultElement.classList.add('show');
+
+            // Reset text first
+            elRoiText1.innerHTML = 'Calculando...';
+            elRoiText2.innerHTML = 'Calculando...';
+
+            animateValue(elImp, 0, imp, 1500, formatRange);
+            animateValue(elMant, 0, mant, 1500, formatRange);
+            animateValue(elRoi1, 0, roi1, 1500, (val) => `~${Math.round(val)}%`);
+            animateValue(elRoi2, 0, roi2, 1500, (val) => `~${Math.round(val)}%`);
+            animateValue(elTotal, 0, totalCost, 1500, formatCurrencyRound);
+
+            setTimeout(() => {
+                const returnVal1 = 1 + (roi1 / 100);
+                const returnVal2 = 1 + (roi2 / 100);
+                elRoiText1.innerHTML = `Por cada 1€ invertido, recuperas <strong>~${returnVal1.toLocaleString('es-ES', { maximumFractionDigits: 1 })} €</strong>.`;
+                elRoiText2.innerHTML = `Por cada 1€ invertido, recuperas <strong>~${returnVal2.toLocaleString('es-ES', { maximumFractionDigits: 1 })} €</strong> a partir del segundo año.`;
+            }, 1000);
+        }
     }
 
-    document.getElementById('calc-btn')?.addEventListener('click', calculateSavings);
+    // Initialize calculator when the DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        new SavingsCalculator();
+    });
 </script>
