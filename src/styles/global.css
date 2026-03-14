@@ -536,7 +536,7 @@ h2 {
 }
 
 .calc-result.show {
-    max-height: 400px;
+    max-height: 1500px;
     margin-top: 30px;
     padding: 25px;
     opacity: 1;
