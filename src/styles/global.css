@@ -59,6 +59,14 @@ h2 {
     margin-top: 0;
 }
 
+.text-gradient {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
 .section h2 {
     font-size: clamp(30px, 5vw, 48px);
     position: relative;
@@ -84,8 +92,7 @@ h2 {
     color: var(--secondary-color);
     margin-bottom: 40px;
     max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
 }
 
 .section-pretitle {
@@ -236,9 +243,17 @@ h2 {
 }
 
 @keyframes pulse {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* ---------- Work / Process Grid ---------- */
@@ -287,9 +302,17 @@ h2 {
     z-index: 1;
 }
 
-.work-item-image.dt-bg { background: linear-gradient(135deg, #3a7bd5, #00d2ff); }
-.work-item-image.ai-bg { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
-.work-item-image.pa-bg { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.work-item-image.dt-bg {
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+}
+
+.work-item-image.ai-bg {
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+}
+
+.work-item-image.pa-bg {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+}
 
 .work-item-image .icon {
     position: absolute;
@@ -462,7 +485,9 @@ h2 {
     object-fit: cover;
 }
 
-.founder-text { flex: 1; }
+.founder-text {
+    flex: 1;
+}
 
 .founder-name {
     font-size: 2.5rem;
@@ -479,7 +504,9 @@ h2 {
 }
 
 /* ---------- Form & Input ---------- */
-.form-group { margin-bottom: 20px; }
+.form-group {
+    margin-bottom: 20px;
+}
 
 .form-label {
     display: block;
@@ -550,43 +577,6 @@ h2 {
     margin: 10px 0;
     font-family: 'Poppins', sans-serif;
 }
-
-/* ---------- Comparison Table ---------- */
-.comparison-wrapper {
-    overflow-x: auto;
-    background: var(--card-bg);
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-sm);
-    padding: 20px;
-}
-
-.comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
-}
-
-.comparison-table th,
-.comparison-table td {
-    padding: 20px;
-    text-align: left;
-    border-bottom: 1px solid rgba(74, 107, 107, 0.1);
-}
-
-.comparison-table th {
-    color: var(--primary-color);
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
-}
-
-.comparison-table tr:last-child td { border-bottom: none; }
-
-.check-icon {
-    color: var(--accent-color);
-    font-weight: bold;
-}
-
-.cross-icon { color: #cc5555; }
 
 /* ---------- Calendar ---------- */
 .calendar-container {
@@ -664,17 +654,26 @@ footer p {
     transition: var(--transition-normal);
 }
 
-.social-link:hover svg { fill: white; }
+.social-link:hover svg {
+    fill: white;
+}
 
 /* ==========================================================================
    Responsive
    ========================================================================== */
 
 @media (min-width: 768px) {
-    .calendar-wrapper { padding-bottom: 56.25%; }
+    .calendar-wrapper {
+        padding-bottom: 56.25%;
+    }
 
-    .contact-grid { grid-template-columns: 1fr 1fr; }
-    .full-width   { grid-column: span 2; }
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .full-width {
+        grid-column: span 2;
+    }
 }
 
 @media (max-width: 768px) {
@@ -688,10 +687,17 @@ footer p {
         font-size: 14px;
     }
 
-    .section { margin: 80px 0; }
+    .section {
+        margin: 80px 0;
+    }
 
-    .about-content { flex-direction: column; }
-    .about-image   { width: 100%; }
+    .about-content {
+        flex-direction: column;
+    }
+
+    .about-image {
+        width: 100%;
+    }
 }
 
 @media (max-width: 900px) {
@@ -706,5 +712,7 @@ footer p {
         height: 250px;
     }
 
-    .founder-bio p { text-align: left; }
+    .founder-bio p {
+        text-align: left;
+    }
 }
