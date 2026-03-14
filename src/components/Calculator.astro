@@ -4,7 +4,9 @@
 
 <section id="calculator" class="section">
     <span class="section-pretitle">CÁLCULO DE IMPACTO Y PRECIO</span>
-    <h2>Calculadora de Rentabilidad.</h2>
+    <h2>Calculadora de Rentabilidad.<br />
+        <span class="text-gradient">Cada mes sin automatizar es dinero que pierdes.</span>
+    </h2>
     <p class="subtitle">Descubre cuánto estás perdiendo en tareas repetitivas y cuánto te costaría automatizarlo basándonos en el valor real que te aportamos.</p>
 
     <div class="calculator-box" style="max-width: 900px;">
@@ -12,7 +14,7 @@
             <!-- Employee rows will be added here dynamically -->
         </div>
 
-        <button id="add-employee-btn" class="cta-button secondary-btn" style="margin-bottom: 25px; font-size: 0.95rem; padding: 12px 25px;">
+        <button id="add-employee-btn" class="cta-button" style="margin-bottom: 25px;">
             + Añadir persona involucrada
         </button>
 
@@ -21,7 +23,7 @@
             <input type="number" id="calc-executions" class="form-input" placeholder="Ej: 50" value="50" />
         </div>
 
-        <button id="calc-btn" class="cta-button" style="width: 100%; text-align: center; border: none; cursor: pointer; margin-top: 15px; font-size: 1.1rem; padding: 18px;">
+        <button id="calc-btn" class="cta-button" style="width: 100%; margin-top: 15px;">
             Obtener Estimación
         </button>
 
@@ -95,21 +97,14 @@
 </template>
 
 <style>
-    .secondary-btn {
-        background-color: transparent !important;
-        color: var(--primary-color) !important;
-        border: 2px solid var(--primary-color) !important;
-        box-shadow: none !important;
+    .text-gradient {
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
     }
-    .secondary-btn::before {
-        display: none !important;
-    }
-    .secondary-btn:hover {
-        background-color: var(--primary-color) !important;
-        color: white !important;
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-sm) !important;
-    }
+
     .employee-row:hover {
         background: rgba(74, 107, 107, 0.08) !important;
     }
