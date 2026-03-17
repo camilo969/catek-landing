@@ -4,9 +4,9 @@
 
 <nav id="navbar">
     <ul>
-        <li><a href="#services">Servicios</a></li>
+        <li><a href="#solutions">Soluciones</a></li>
+        <li><a href="#process">Proceso</a></li>
         <li><a href="#calculator">Calculadora</a></li>
-        <li><a href="#difference">Por qué Catek</a></li>
         <li><a href="#contact">Contacto</a></li>
         <li><a href="#founder">Fundador</a></li>
     </ul>
@@ -79,6 +79,53 @@
     nav ul li a:hover {
         color: var(--accent-color);
         background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 12px 15px;
+            width: 95%;
+            border-radius: 25px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            justify-content: flex-start;
+        }
+
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav:global(.scrolled) {
+            padding: 10px 15px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            min-width: 100%;
+            width: max-content;
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            flex-shrink: 0;
+        }
+
+        nav ul li a {
+            padding: 6px 8px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        
+        nav ul::after {
+            content: '';
+            display: block;
+            width: 5px;
+            flex-shrink: 0;
+        }
     }
 </style>
 
