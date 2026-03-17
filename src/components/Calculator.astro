@@ -28,7 +28,7 @@
         </button>
 
         <div id="calc-result" class="calc-result">
-            <div class="result-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 25px;">
+            <div class="result-grid">
                 <div class="result-card" style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: var(--border-radius-sm);">
                     <span style="font-size: 0.95rem; opacity: 0.9; display: block; margin-bottom: 5px;">Implementación (Pago único)</span>
                     <span id="res-implementation" class="result-value" style="margin: 0; font-size: 1.8rem; color: #fff;">0 € - 0 €</span>
@@ -83,7 +83,7 @@
 </section>
 
 <template id="employee-row-template">
-    <div class="employee-row" style="display: flex; gap: 20px; align-items: flex-end; margin-bottom: 20px; background: rgba(74, 107, 107, 0.05); padding: 20px; border-radius: var(--border-radius-sm); border: 1px solid rgba(74, 107, 107, 0.1); position: relative; transition: var(--transition-normal);">
+    <div class="employee-row">
         <div class="form-group" style="margin-bottom: 0; flex: 1;">
             <label class="form-label" style="font-size: 0.9rem;">Salario Bruto Anual (€)</label>
             <input type="number" class="form-input emp-salary" placeholder="Ej: 25000" value="25000" required />
@@ -105,29 +105,65 @@
         color: transparent;
     }
 
+    /* Result grid layout */
+    .result-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        text-align: left;
+        margin-bottom: 25px;
+    }
+
+    /* Employee row layout */
+    .employee-row {
+        display: flex;
+        gap: 20px;
+        align-items: flex-end;
+        margin-bottom: 20px;
+        background: rgba(74, 107, 107, 0.05);
+        padding: 20px;
+        border-radius: var(--border-radius-sm);
+        border: 1px solid rgba(74, 107, 107, 0.1);
+        position: relative;
+        transition: var(--transition-normal);
+    }
+
     .employee-row:hover {
-        background: rgba(74, 107, 107, 0.08) !important;
+        background: rgba(74, 107, 107, 0.08);
     }
     .remove-employee-btn:hover {
         transform: scale(1.1);
         color: #ff3333 !important;
     }
+    
+    .remove-employee-btn {
+        background: transparent;
+        border: none;
+        color: #cc5555;
+        cursor: pointer;
+        font-size: 1.8rem;
+        padding: 0 10px;
+        height: 48px;
+        line-height: 48px;
+        transition: var(--transition-normal);
+    }
+
     @media (max-width: 768px) {
         .employee-row {
             flex-direction: column;
-            align-items: stretch !important;
-            padding-top: 35px !important;
+            align-items: stretch;
+            padding-top: 35px;
         }
         .remove-employee-btn {
             position: absolute;
             top: 5px;
             right: 5px;
-            height: auto !important;
-            line-height: 1 !important;
-            padding: 5px 10px !important;
+            height: auto;
+            line-height: 1;
+            padding: 5px 10px;
         }
         .result-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: 1fr;
         }
     }
 </style>
