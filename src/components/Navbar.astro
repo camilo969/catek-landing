@@ -2,158 +2,403 @@
 // Navbar — Fixed navigation with scroll effect
 ---
 
-<nav id="navbar">
-    <ul>
-        <li><a href="#solutions">Soluciones</a></li>
-        <li><a href="#process">Proceso</a></li>
-        <li><a href="#calculator">Calculadora</a></li>
-        <li><a href="#contact">Contacto</a></li>
-        <li><a href="#founder">Fundador</a></li>
-    </ul>
-</nav>
+<header class="navbar" id="navbar">
+    <div class="nav-container">
+        <!-- Left group (mobile: menu + logo) -->
+        <div class="nav-left">
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-drawer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <a href="/" class="logo">
+                <div class="logo-icon"></div>
+                <span class="wordmark">Catek</span>
+            </a>
+        </div>
+
+        <!-- Center group (desktop nav) -->
+        <nav class="desktop-nav">
+            <a href="#solutions">Soluciones</a>
+            <a href="#process">Proceso</a>
+            <a href="#calculator">Calculadora</a>
+            <a href="#contact">Contacto</a>
+            <a href="#founder">Fundador</a>
+        </nav>
+
+        <!-- Right group (actions) -->
+        <div class="nav-actions">
+            <a href="#contact" class="btn-submit">Submit</a>
+            <a href="#contact" class="btn-signin">
+                Sign In
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Drawer Overlay -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<!-- Mobile Drawer -->
+<aside class="mobile-drawer" id="mobile-drawer" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer-header">
+        <a href="/" class="logo">
+            <div class="logo-icon"></div>
+            <span class="wordmark">Catek</span>
+        </a>
+        <button class="close-drawer" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+    <nav class="mobile-nav">
+        <a href="#solutions">Soluciones</a>
+        <a href="#process">Proceso</a>
+        <a href="#calculator">Calculadora</a>
+        <a href="#contact">Contacto</a>
+        <a href="#founder">Fundador</a>
+    </nav>
+</aside>
 
 <style>
-    nav {
+    .navbar {
+        --nav-height: 64px;
+        --container-max-width: 1440px;
+        --nav-padding-x: 16px;
+        
+        --color-foreground: var(--primary-color, #1a3636);
+        --color-foreground-muted: var(--secondary-color, #4a6b6b);
+        --color-gray-muted: var(--secondary-color, #4a6b6b);
+        --color-hover-bg: rgba(26, 54, 54, 0.08);
+        --color-border: rgba(74, 107, 107, 0.2);
+        --color-primary: var(--primary-color, #1a3636);
+        --color-primary-text: #ffffff;
+
         position: fixed;
-        top: 20px;
+        top: 0;
         left: 0;
         right: 0;
-        width: min(95%, 650px);
-        margin: 0 auto;
-        background: var(--nav-bg);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 15px 20px;
-        border-radius: var(--border-radius-lg);
+        height: var(--nav-height);
+        background: transparent;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        z-index: 1000;
         display: flex;
-        justify-content: center;
-        box-shadow: var(--shadow-sm);
-        z-index: 100;
-        transition: var(--transition-normal);
+        align-items: center;
+        font-family: 'Inter', sans-serif;
     }
 
-    nav:global(.scrolled) {
-        top: 10px;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        box-shadow: var(--shadow-md);
-        padding: 12px 15px;
-    }
-
-    nav ul {
-        list-style-type: none;
-        display: flex;
-        justify-content: space-between;
+    .nav-container {
         width: 100%;
-        padding: 0;
-        margin: 0;
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 var(--nav-padding-x);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
     }
 
-    nav ul li { margin: 0; }
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
 
-    nav ul li a {
+    /* Logo */
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
         text-decoration: none;
-        color: var(--primary-color);
+        color: var(--color-foreground);
+    }
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+        background-color: var(--color-primary);
+        border-radius: 10px;
+    }
+    .wordmark {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    /* Desktop Nav */
+    .desktop-nav {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+    }
+    .desktop-nav a {
+        text-decoration: none;
+        color: var(--color-foreground-muted);
+        font-size: 16px;
         font-weight: 500;
-        padding: 10px 20px;
-        border-radius: var(--border-radius-sm);
-        transition: var(--transition-normal);
-        position: relative;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        border-radius: 10px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
+        background-color: var(--color-hover-bg);
+        color: var(--color-foreground);
     }
 
-    nav ul li a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 5px;
-        left: 50%;
-        background-color: var(--accent-color);
-        transition: var(--transition-normal);
-        transform: translateX(-50%);
+    /* Actions */
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
-    nav ul li a:hover::after { width: 40%; }
-
-    nav ul li a:hover {
-        color: var(--accent-color);
-        background-color: rgba(255, 255, 255, 0.5);
+    .btn-submit,
+    .btn-signin {
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: background-color 0.2s ease, color 0.2s ease;
     }
 
+    .btn-submit {
+        background-color: #ffffff;
+        color: var(--color-foreground);
+        border: 1px solid var(--color-border);
+    }
+    .btn-submit:hover {
+        background-color: var(--color-hover-bg);
+    }
+
+    .btn-signin {
+        background-color: var(--color-primary);
+        color: var(--color-primary-text);
+        border: none;
+        gap: 8px;
+    }
+    .btn-signin:hover {
+        opacity: 0.9;
+    }
+    .arrow-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+        display: none;
+        background: transparent;
+        border: none;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        cursor: pointer;
+        color: var(--color-foreground);
+        align-items: center;
+        justify-content: center;
+    }
+    .menu-toggle svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Mobile Drawer Overlay */
+    .drawer-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1001;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 75vw;
+        max-width: 384px;
+        height: 100vh;
+        background-color: #ffffff;
+        z-index: 1002;
+        transform: translateX(-100%);
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border-right: 1px solid var(--color-border);
+        box-shadow: 4px 0 24px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+    }
+    .mobile-drawer.open {
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px var(--nav-padding-x);
+        margin-bottom: 8px;
+    }
+
+    .close-drawer {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--color-gray-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+    }
+    .close-drawer svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 0 var(--nav-padding-x);
+    }
+
+    .mobile-nav a {
+        text-decoration: none;
+        color: var(--color-gray-muted);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px;
+        border-radius: 10px;
+        display: block;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .mobile-nav a:hover,
+    .mobile-nav a.active {
+        background-color: var(--color-hover-bg);
+        color: var(--color-foreground);
+    }
+
+    /* Breakpoint ~768px */
     @media (max-width: 768px) {
-        nav {
-            padding: 12px 15px;
-            width: 95%;
-            border-radius: 25px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            justify-content: flex-start;
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.6);
         }
-
-        nav::-webkit-scrollbar {
+        .desktop-nav {
             display: none;
         }
-
-        nav:global(.scrolled) {
-            padding: 10px 15px;
+        .btn-submit {
+            display: none;
         }
-
-        nav ul {
+        .menu-toggle {
             display: flex;
-            justify-content: center;
-            min-width: 100%;
-            width: max-content;
-            gap: 12px;
-            margin: 0;
-            padding: 0;
-        }
-        
-        nav ul li {
-            flex-shrink: 0;
-        }
-
-        nav ul li a {
-            padding: 6px 8px;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-        
-        nav ul::after {
-            content: '';
-            display: block;
-            width: 5px;
-            flex-shrink: 0;
         }
     }
 </style>
 
 <script>
-    // Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar?.classList.add('scrolled');
-        } else {
-            navbar?.classList.remove('scrolled');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const closeDrawerBtn = document.querySelector('.close-drawer');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const mobileLinks = document.querySelectorAll('.mobile-nav a');
+
+    function openDrawer() {
+        if(mobileDrawer) mobileDrawer.classList.add('open');
+        if(drawerOverlay) drawerOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        if(menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+        if(mobileDrawer) mobileDrawer.classList.remove('open');
+        if(drawerOverlay) drawerOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+        if(menuToggle) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.focus();
+        }
+    }
+
+    if(menuToggle) menuToggle.addEventListener('click', openDrawer);
+    if(closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+    if(drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+
+    // Close on escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('open')) {
+            closeDrawer();
         }
     });
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('nav a').forEach((anchor) => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId) {
-                const targetElement = document.querySelector(targetId);
+    // Smooth scrolling & close on link click
+    document.querySelectorAll(".desktop-nav a, .mobile-nav a, .btn-submit, .btn-signin").forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const targetElement = document.querySelector(href);
                 if (targetElement) {
                     window.scrollTo({
-                        top: (targetElement as HTMLElement).offsetTop - 100,
-                        behavior: 'smooth',
+                        top: targetElement.offsetTop - 64, // navbar height
+                        behavior: "smooth",
                     });
                 }
+                closeDrawer();
             }
         });
     });
+
+    // Active link highlighting
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const allNavLinks = document.querySelectorAll('.desktop-nav a, .mobile-nav a');
+    
+    function highlightActiveLink() {
+        const scrollY = window.scrollY;
+        
+        sections.forEach(current => {
+            const sectionHeight = current.offsetHeight;
+            const sectionTop = current.offsetTop - 100;
+            const sectionId = current.getAttribute('id');
+            
+            if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                allNavLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === '#' + sectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+
+    window.addEventListener('scroll', highlightActiveLink);
+    // Initial highlight
+    highlightActiveLink();
 </script>
