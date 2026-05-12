@@ -6,15 +6,31 @@
     <div class="nav-container">
         <!-- Left group (mobile: menu + logo) -->
         <div class="nav-left">
-            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-drawer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button
+                class="menu-toggle"
+                aria-label="Toggle menu"
+                aria-expanded="false"
+                aria-controls="mobile-drawer"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
             </button>
             <a href="/" class="logo">
-                <div class="logo-icon"></div>
+                <img
+                    src="/images/logo_catek.png"
+                    alt="Catek Logo"
+                    class="logo-icon"
+                />
                 <span class="wordmark">Catek</span>
             </a>
         </div>
@@ -33,7 +49,15 @@
             <a href="#contact" class="btn-submit">Submit</a>
             <a href="#contact" class="btn-signin">
                 Sign In
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="arrow-icon"
+                >
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
@@ -46,14 +70,31 @@
 <div class="drawer-overlay" id="drawer-overlay"></div>
 
 <!-- Mobile Drawer -->
-<aside class="mobile-drawer" id="mobile-drawer" role="dialog" aria-modal="true" aria-label="Menu">
+<aside
+    class="mobile-drawer"
+    id="mobile-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu"
+>
     <div class="drawer-header">
         <a href="/" class="logo">
-            <div class="logo-icon"></div>
+            <img
+                src="/images/logo_catek.png"
+                alt="Catek Logo"
+                class="logo-icon"
+            />
             <span class="wordmark">Catek</span>
         </a>
         <button class="close-drawer" aria-label="Close menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -73,7 +114,7 @@
         --nav-height: 64px;
         --container-max-width: 1440px;
         --nav-padding-x: 16px;
-        
+
         --color-foreground: var(--primary-color, #1a3636);
         --color-foreground-muted: var(--secondary-color, #4a6b6b);
         --color-gray-muted: var(--secondary-color, #4a6b6b);
@@ -93,7 +134,7 @@
         z-index: 1000;
         display: flex;
         align-items: center;
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
     }
 
     .nav-container {
@@ -122,13 +163,12 @@
         color: var(--color-foreground);
     }
     .logo-icon {
-        width: 32px;
-        height: 32px;
-        background-color: var(--color-primary);
-        border-radius: 10px;
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
     }
     .wordmark {
-        font-size: 20px;
+        font-size: 32px;
         font-weight: 700;
         letter-spacing: -0.5px;
     }
@@ -250,7 +290,7 @@
         transform: translateX(-100%);
         transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         border-right: 1px solid var(--color-border);
-        box-shadow: 4px 0 24px rgba(0,0,0,0.05);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
         display: flex;
         flex-direction: column;
     }
@@ -323,82 +363,92 @@
 </style>
 
 <script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const closeDrawerBtn = document.querySelector('.close-drawer');
-    const drawerOverlay = document.getElementById('drawer-overlay');
-    const mobileDrawer = document.getElementById('mobile-drawer');
-    const mobileLinks = document.querySelectorAll('.mobile-nav a');
+    const menuToggle = document.querySelector(".menu-toggle");
+    const closeDrawerBtn = document.querySelector(".close-drawer");
+    const drawerOverlay = document.getElementById("drawer-overlay");
+    const mobileDrawer = document.getElementById("mobile-drawer");
+    const mobileLinks = document.querySelectorAll(".mobile-nav a");
 
     function openDrawer() {
-        if(mobileDrawer) mobileDrawer.classList.add('open');
-        if(drawerOverlay) drawerOverlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        if(menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+        if (mobileDrawer) mobileDrawer.classList.add("open");
+        if (drawerOverlay) drawerOverlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+        if (menuToggle) menuToggle.setAttribute("aria-expanded", "true");
     }
 
     function closeDrawer() {
-        if(mobileDrawer) mobileDrawer.classList.remove('open');
-        if(drawerOverlay) drawerOverlay.classList.remove('open');
-        document.body.style.overflow = '';
-        if(menuToggle) {
-            menuToggle.setAttribute('aria-expanded', 'false');
+        if (mobileDrawer) mobileDrawer.classList.remove("open");
+        if (drawerOverlay) drawerOverlay.classList.remove("open");
+        document.body.style.overflow = "";
+        if (menuToggle) {
+            menuToggle.setAttribute("aria-expanded", "false");
             menuToggle.focus();
         }
     }
 
-    if(menuToggle) menuToggle.addEventListener('click', openDrawer);
-    if(closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
-    if(drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+    if (menuToggle) menuToggle.addEventListener("click", openDrawer);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
+    if (drawerOverlay) drawerOverlay.addEventListener("click", closeDrawer);
 
     // Close on escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('open')) {
+    document.addEventListener("keydown", (e) => {
+        if (
+            e.key === "Escape" &&
+            mobileDrawer &&
+            mobileDrawer.classList.contains("open")
+        ) {
             closeDrawer();
         }
     });
 
     // Smooth scrolling & close on link click
-    document.querySelectorAll(".desktop-nav a, .mobile-nav a, .btn-submit, .btn-signin").forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-            const href = this.getAttribute("href");
-            if (href && href.startsWith('#')) {
-                e.preventDefault();
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 64, // navbar height
-                        behavior: "smooth",
-                    });
+    document
+        .querySelectorAll(
+            ".desktop-nav a, .mobile-nav a, .btn-submit, .btn-signin"
+        )
+        .forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                const href = this.getAttribute("href");
+                if (href && href.startsWith("#")) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 64, // navbar height
+                            behavior: "smooth",
+                        });
+                    }
+                    closeDrawer();
                 }
-                closeDrawer();
-            }
+            });
         });
-    });
 
     // Active link highlighting
-    const sections = document.querySelectorAll('section[id], div[id]');
-    const allNavLinks = document.querySelectorAll('.desktop-nav a, .mobile-nav a');
-    
+    const sections = document.querySelectorAll("section[id], div[id]");
+    const allNavLinks = document.querySelectorAll(
+        ".desktop-nav a, .mobile-nav a"
+    );
+
     function highlightActiveLink() {
         const scrollY = window.scrollY;
-        
-        sections.forEach(current => {
+
+        sections.forEach((current) => {
             const sectionHeight = current.offsetHeight;
             const sectionTop = current.offsetTop - 100;
-            const sectionId = current.getAttribute('id');
-            
-            if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                allNavLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if(link.getAttribute('href') === '#' + sectionId) {
-                        link.classList.add('active');
+            const sectionId = current.getAttribute("id");
+
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                allNavLinks.forEach((link) => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === "#" + sectionId) {
+                        link.classList.add("active");
                     }
                 });
             }
         });
     }
 
-    window.addEventListener('scroll', highlightActiveLink);
+    window.addEventListener("scroll", highlightActiveLink);
     // Initial highlight
     highlightActiveLink();
 </script>
