@@ -37,6 +37,8 @@ body {
     background: var(--background-gradient);
     line-height: 1.6;
     position: relative;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .container {
